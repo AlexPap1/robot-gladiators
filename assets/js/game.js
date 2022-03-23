@@ -82,18 +82,86 @@ var fight = function(enemyName) {
     }}
 };
 
-for(var i = 0; i < enemyNames.length; i++) {
+var startGame = function() {
+    playerHealth = 100;
+    playerAttack = 10;
+    playerMoney = 10;
+    for(var i = 0; i < enemyNames.length; i++) {
+        if (playerHealth > 0) {
+         window.alert("Welcome to Robot Gladiators! Round " + ( i + 1 ) );
+            var pickedEnemyName = enemyNames[i];
+            enemyHealth = 50;
+            fight(pickedEnemyName);
+            if (playerHealth > 0 && i < enemyNames.length - 1) {
+                var storeConfirm = window.confirm("The fight is over, visit the store?");
+                if (storeConfirm) {
+                    shop();
+                }
+            }
+        }
+        else {
+            window.alert("You died bro... sorry :(");
+            break;    
+        }
+    }
+    endGame();
+};
+
+var endGame = function() {
     if (playerHealth > 0) {
-        window.alert("Welcome to Robot Gladiators! Round " + ( i + 1 ) );
-        var pickedEnemyName = enemyNames[i];
-        enemyHealth = 50;
-        fight(pickedEnemyName);
+        window.alert("That was easy")
     }
     else {
-        window.alert("You died bro... sorry :(");
-        break;    
+        window.alert("So, the game is over. What a truly foolish end...")
     }
-}
+};
+//WHY IS THERE NEVER ENOUGH MONEY ?? NO BITCHES??
+var shop = function() {
+    var shopOptionPrompt = window.prompt("REFILL, UPGRADE, or LEAVE?");
+    switch (shopOptionPrompt) {
+        case "REFILL":
+        case "refill":
+            if(playerMoney >= 7) {
+                window.alert("Refilling player's health by 20 for 7 dollars.");
+                playerHealth = playerHealth + 20;
+                playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert("You don't have enough money! Broke ass bitch.");
+            }
+            break;
+        case "UPGRADE":
+        case "upgrade":
+            if (playerMoney >= 7) {
+                window.alert("Upgrading player;s attack by 6 for 7 dollars.");
+                playerAttack = playerAttack + 6;
+                playerMoney = playerMoney - 7;
+            }
+            else {
+                window.alert("You don't have enoguh money! Broke ass bitch.");
+            }
+            break;
+        case "LEAVE":
+        case "leave":
+            window.alert("Leaving the store.");
+            break;
+        default:
+            window.alert("You did not pick a valid option. Fix it.");
+            shopOptionPrompt();
+            break;
+    }
+};
+
+var playAgainConfirm = window.confirm("Down for another round?");
+
+    if (playAgainConfirm) {
+        startGame();
+    }
+    else {
+        window.alert("Wowwww... Really? See ya chump.");
+    }
+
+startGame();
 
 //window.alert(playerName);
 //console.log(playerName);
